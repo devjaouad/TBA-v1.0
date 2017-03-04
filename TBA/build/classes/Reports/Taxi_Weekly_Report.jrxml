@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Taxi_Report" language="groovy" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="30" bottomMargin="10" uuid="2cf81c1a-b086-408a-a254-cf8a1a0f5d39">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="169"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT T.Week, E.FNAME, E.LNAME, E.EMP_ID, Sum(CashTrips + CCTrips) AS Total_Trips, Sum(T.CC_INCOME) AS CC_Income,
+Sum(T.CASH_INCOME) AS Cash_Income, Sum(T.EZPASS) AS EzPass, Sum(ST_SURCHARGE + IMP_SURCHARGE) AS Tax_Total,
+Sum(T.LEASEFEE) AS Lease_Fee, Sum(T.CHECKS) AS Checks, Sum(T.MILESTOTAL) AS Total_Miles, Sum(T.GAS) AS GASE, Sum(T.CASHTIPS) AS CASHTIPS,
+Sum(CC_INCOME + CASH_INCOME - ST_SURCHARGE- IMP_SURCHARGE - EZPASS - LEASEFEE ) AS Net_Income
+FROM EMPLOYEE E INNER JOIN Taxi_REC T ON E.Emp_ID = T.Emp_ID
+
+GROUP BY T.Week, E.Fname, E.Lname, E.Emp_ID
+ORDER BY T.Week]]>
+	</queryString>
+	<field name="Week" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMP_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total_Trips" class="java.math.BigDecimal"/>
+	<field name="CC_Income" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cash_Income" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EzPass" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tax_Total" class="java.lang.Double"/>
+	<field name="Lease_Fee" class="java.lang.Double"/>
+	<field name="Checks" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total_Miles" class="java.lang.Double"/>
+	<field name="GASE" class="java.lang.Double"/>
+	<field name="CASHTIPS" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Net_Income" class="java.lang.Double"/>
+	<variable name="Trips_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Total_Trips}]]></variableExpression>
+	</variable>
+	<variable name="CC_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CC_Income}]]></variableExpression>
+	</variable>
+	<variable name="Cash_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Cash_Income}]]></variableExpression>
+	</variable>
+	<variable name="EzPass_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{EzPass}]]></variableExpression>
+	</variable>
+	<variable name="Lease_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Lease_Fee}]]></variableExpression>
+	</variable>
+	<variable name="MtaTax_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Tax_Total}]]></variableExpression>
+	</variable>
+	<variable name="Checks_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Checks}]]></variableExpression>
+	</variable>
+	<variable name="Miles_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Total_Miles}]]></variableExpression>
+	</variable>
+	<variable name="Gas_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{GASE}]]></variableExpression>
+	</variable>
+	<variable name="Net_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Net_Income}]]></variableExpression>
+	</variable>
+	<variable name="TipsTotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CASHTIPS}]]></variableExpression>
+	</variable>
+	<group name="GroupById" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{EMP_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="55">
+				<staticText>
+					<reportElement x="25" y="3" width="71" height="15" uuid="48459583-54e8-4a05-94ee-db0da2f640fa"/>
+					<textElement>
+						<font fontName="Cambria" isBold="true" isUnderline="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[First Name:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="25" y="17" width="70" height="15" uuid="000f12e9-c98e-471a-b7a7-4a9786a84d5c"/>
+					<textElement>
+						<font fontName="Cambria" isBold="true" isUnderline="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Last Name:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="25" y="31" width="70" height="15" uuid="fae7c1e1-5691-44bc-9efb-9eceebb57b44"/>
+					<textElement>
+						<font fontName="Cambria" isBold="true" isUnderline="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Hack License:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="95" y="31" width="100" height="15" uuid="54f5e6fd-d635-4195-b443-980f33a8366c"/>
+					<textElement>
+						<font fontName="Cambria"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{EMP_ID}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="96" y="3" width="99" height="15" uuid="3596dcc5-3810-48a3-a997-bc0a4ce31b35"/>
+					<textElement>
+						<font fontName="Cambria"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FNAME}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="95" y="17" width="100" height="15" uuid="7e9ce453-436d-4c08-ba4b-ead683ccdef4"/>
+					<textElement>
+						<font fontName="Cambria"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{LNAME}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="15">
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="15" y="0" width="50" height="15" uuid="4c263f07-f7fa-4976-a05e-ccd0179f0419"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Week]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="261" y="0" width="50" height="15" uuid="55d7ed49-167d-479d-b371-0fd693d21827"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Mta Tax]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="113" y="0" width="50" height="15" uuid="c99fde8e-2e9a-444d-bd16-7a523c34e6a5"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[CC.Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="64" y="0" width="50" height="15" uuid="f28c4c23-79bc-404c-a536-70a91415dceb"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Trips Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="211" y="0" width="50" height="15" uuid="b9edd60c-468b-4552-85b6-2c12014cb01d"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Ez-Pass]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="162" y="0" width="50" height="15" uuid="e2fef7a7-712f-4e95-8bf4-d62791185d72"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Cash Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="310" y="0" width="50" height="15" uuid="57cf9f7e-0c6a-4556-b6fe-4c5d4b9ea2e2"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Lease Fee]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="360" y="0" width="50" height="15" uuid="1802cd46-68a4-4c43-b72e-e4fbdf4dd013"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Justified">
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Checks]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="409" y="0" width="50" height="15" uuid="6655b267-a97e-4b37-ae84-e3300344266a"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Justified">
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Miles]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="458" y="0" width="50" height="15" uuid="323acc31-6833-4027-a99c-80a66f4c175d"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Justified">
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Gas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="556" y="0" width="50" height="15" uuid="85f297b2-89fa-4cff-9687-d4d18c8e91be"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Net Income]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="507" y="0" width="50" height="15" uuid="992dca52-2e4f-4024-bb6b-b31e2defbaa3"/>
+					<textElement>
+						<font fontName="Cambria" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cash Tips]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="226" y="0" width="214" height="30" uuid="7a40ba87-6f88-4261-bd6a-bf501447a0ea"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Lucida Calligraphy" size="20" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Weekly INCOME]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<elementGroup/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="15" y="0" width="50" height="15" uuid="da3ddc8d-cf93-441a-8875-15403b0bf6d6"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Week}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="162" y="0" width="50" height="15" uuid="3f56c49f-3faf-4831-83b8-c3ebda0c564a"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cash_Income}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="64" y="0" width="50" height="15" uuid="254fd3b2-8725-4f91-8540-ba005427d90c"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total_Trips}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="113" y="0" width="50" height="15" uuid="e34a0e49-fb40-47e0-a1e2-d92701129f79"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CC_Income}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="211" y="0" width="50" height="15" uuid="9c3b39f8-febd-4b4e-bfae-9c8460bb41fa"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EzPass}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="261" y="0" width="50" height="15" uuid="0bbbc6f4-fa15-477b-886d-5921caee3687"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tax_Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="310" y="0" width="50" height="15" uuid="c244a0c1-eca6-41a3-bbb7-5c10146bc9f7"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lease_Fee}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="409" y="0" width="50" height="15" uuid="8c862c02-c617-49d7-88ec-690bc1b12145"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total_Miles}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="360" y="0" width="50" height="15" uuid="d2497295-d9f9-470a-bb30-1463e8b30f73"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Checks}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="458" y="0" width="50" height="15" uuid="1d496578-871d-407b-98f6-367f4790f038"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GASE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="556" y="0" width="50" height="15" uuid="da485a5f-1ed4-4f77-bc28-0304bdc325c3"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Net_Income}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="507" y="0" width="50" height="15" uuid="4572f5be-ca70-48dd-9457-48a33a693283"/>
+				<textElement>
+					<font fontName="Cambria" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CASHTIPS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField pattern="MM/dd/yyyy h.mm a">
+				<reportElement x="29" y="0" width="100" height="20" uuid="4015bb52-eb3d-4b9c-b9ca-652863d98fd3"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="461" y="0" width="80" height="20" uuid="874adb01-686c-4164-a68b-857fada9472a"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="541" y="0" width="40" height="20" uuid="be0c02b8-1bd3-4c7f-b8e4-3addd506c6a4"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="0" width="43" height="15" uuid="2f74e37b-3552-4f30-b234-b22353b085ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Cambria" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="65" y="0" width="50" height="15" uuid="3643ddac-8171-4828-9c9b-d2b0afc3ca39"/>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Trips_Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="114" y="0" width="50" height="15" uuid="fcc091d2-4d0d-4399-a93e-acd87330433a"/>
+				<textElement>
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CC_Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="212" y="0" width="50" height="15" uuid="b4f4ce8c-5a7e-4f39-a840-89ef618a35e1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{EzPass_Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="261" y="0" width="50" height="15" uuid="524bb199-c785-4a05-ac1a-c4cff7d73407"/>
+				<textElement>
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{MtaTax_Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="310" y="0" width="50" height="15" uuid="b6e30a42-aa5b-4d70-942c-5f652cccd7e0"/>
+				<textElement>
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Lease_Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="360" y="0" width="50" height="15" uuid="912d7385-5c62-4c48-8686-5785a0df1234"/>
+				<textElement>
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Checks_Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="410" y="0" width="50" height="15" uuid="352e2ee2-b421-44ff-ba72-90292c4e9cfe"/>
+				<textElement>
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Miles_Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="459" y="0" width="50" height="15" uuid="1fbd228c-9973-44d0-94c3-6ed3aa7e017d"/>
+				<textElement>
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Miles_Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="556" y="0" width="50" height="15" uuid="165c5cc4-7593-460a-b010-22f8c2b44240"/>
+				<textElement>
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Net_Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="507" y="0" width="50" height="15" uuid="c1f75859-1d0d-4b6b-99d4-aa0f748f2cad"/>
+				<textElement>
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TipsTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="162" y="0" width="50" height="15" uuid="7060bb0b-abce-4217-9d86-83e2be0e34e3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Cash_Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

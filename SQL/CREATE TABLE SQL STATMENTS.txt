@@ -1,0 +1,100 @@
+TBA V1.0
+==========
+
+CREATE DATABASE TXDB;
+-----------------------------
+
+create table BILLS
+(
+	DATE DATE not null,
+	EMP_ID INTEGER not null,
+	MONEY_SENT DOUBLE,
+	RENT DOUBLE,
+	PHONE DOUBLE,
+	GAS DOUBLE,
+	ELECTRICITY DOUBLE,
+	INTERNET DOUBLE,
+	OTHER DOUBLE,
+	primary key (DATE, EMP_ID)
+)
+----------------------------------------------------------
+create table EMPLOYEE
+(
+	EMP_ID INTEGER not null primary key,
+	FNAME VARCHAR(30) not null,
+	LNAME VARCHAR(30) not null,
+	ADDRESS VARCHAR(30) not null,
+	CITY VARCHAR(15) not null,
+	STATE VARCHAR(2) not null,
+	ZCODE INTEGER not null,
+	PHONE_N VARCHAR(15) not null,
+	REG_DATE DATE not null,
+	EMP_IMG LONGBLOB
+)
+---------------------------------------------------------------
+create table  OWNER
+(
+	OWNER_ID INTEGER not null primary key,
+	COMPANY VARCHAR(30) not null,
+	ADDRESS VARCHAR(30) not null,
+	CITY VARCHAR(30) not null,
+	STATE VARCHAR(2) not null,
+	ZCODE INTEGER not null,
+	PHONE_N VARCHAR(15) not null,
+	REG_DATE DATE not null
+)
+----------------------------------------------------------------
+create table TAXI_REC
+(
+	DATE DATE not null,
+	EMP_ID INTEGER not null,
+	OWNER_ID INTEGER not null,
+	WEEK INTEGER not null,
+	MEDALLION VARCHAR(4) not null,
+	CC_INCOME DOUBLE,
+	CASH_INCOME DOUBLE,
+	CASHTRIPS INTEGER,
+	CCTRIPS INTEGER,
+	TRIPSTOTAL INTEGER,
+	EZPASS DOUBLE,
+	ST_SURCHARGE DOUBLE,
+	IMP_SURCHARGE DOUBLE,
+	LEASEFEE DOUBLE,
+	CHECKS DOUBLE,
+	MILESTOTAL DOUBLE,
+	CASHTIPS DOUBLE,
+	GAS DOUBLE,
+	primary key (DATE, EMP_ID, OWNER_ID)
+)
+---------------------------------------------------------------------
+create table  TICKET
+(
+	TICKET_ID VARCHAR(20) not null,
+	EMP_ID INTEGER not null,
+	DATE DATE not null,
+	VIOLATION VARCHAR(30) not null,
+	COST DOUBLE not null,
+	primary key (TICKET_ID, EMP_ID)
+)
+
+--------------------------------------------------------------------
+FOREIGN KEY 
+==========
+
+ALTER TABLE Bills ADD CONSTRAINT Emp_ID_FK FOREIGN KEY ( Emp_ID ) REFERENCES Employee( Emp_ID ) ;
+
+ALTER TABLE Taxi_Rec ADD CONSTRAINT Emp_ID_FK2 FOREIGN KEY ( Emp_ID ) REFERENCES Employee( Emp_ID ) ;
+
+ALTER TABLE Ticket ADD CONSTRAINT Emp_ID_FK3 FOREIGN KEY ( Emp_ID ) REFERENCES Employee( Emp_ID ) ;
+
+ALTER TABLE Taxi_Rec ADD CONSTRAINT Owner_ID_FK4 FOREIGN KEY ( Owner_ID) REFERENCES Owner( Owner_ID) ;
+--------------------------------------------------------------------
+CREATE VIEW Taxi_Total AS
+select EMP_ID , SUM(T.CC_INCOME + T.CASH_INCOME + T.CASHTIPS - T.ST_SURCHARGE - T.IMP_SURCHARGE - T.EZPASS - T.LEASEFEE - T.GAS) AS T_Total
+from txdb.taxi_rec t
+GROUP BY EMP_ID;
+-------------------------------------------------------------------
+CREATE VIEW Bills_Total AS
+select EMP_ID, SUM(B.MONEY_SENT + B.RENT + B.PHONE + B.GAS + B.ELECTRICITY + B.INTERNET + B.OTHER) AS B_TOTAL
+from txdb.bills b
+GROUP BY EMP_ID;

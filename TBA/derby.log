@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Thu Mar 31 02:05:17 EDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0153-cb46-a126-000000db70a8 
+on database directory F:\TBA.java\data\TXDB with class loader sun.misc.Launcher$AppClassLoader@ad8086 
+Loaded from file:/F:/TBA.java/My_TBA_Project_2015.v1/TBA/includes/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_40-b25
+user.dir=F:\TBA.java\My_TBA_Project_2015.v1\TBA
+os.name=Windows 8.1
+os.arch=x86
+os.version=6.3
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

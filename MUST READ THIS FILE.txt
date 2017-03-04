@@ -1,0 +1,19 @@
+If you want to use the Embedded Derby Database do this:
+--->You have to MOVE the "data" folder to your C:\ directory, so the path will be C:\data 
+Else if you want to use Mysql Database, there is a text file called "CREATE TABLE SQL STATMENTS"
+copy the create table statements and execute them in your Mysql DBMS.
+
+Remember to check which connection you want to use in:
+BusinessClass Package--->Driver-->DBconnection.java-->uncomment the connection you want
+
+For login use:
+-----------------------
+Username: tba
+Password: 000
+=============
+For update use:
+------------------------
+Password: 0000
+=============
+
+
